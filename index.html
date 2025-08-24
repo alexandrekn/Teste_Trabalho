@@ -2,9 +2,9 @@
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
   <title>Armazenamento em Nuvem – O Futuro dos Dados</title>
-  <meta name="description" content="Data Centers, Sincronização, Comparativo Nuvem x Local (formato versus) e jogo Sync Runner." />
+  <meta name="description" content="Landing page educativa sobre Data Centers, Sincronização, Comparativo Nuvem x Local (formato VS) e jogo Sync Runner com vibração, recorde e controles para PC e celular." />
   <style>
     /* ====== Variáveis & base ====== */
     :root{
@@ -48,25 +48,31 @@
     .card{background:var(--card); border:1px solid rgba(255,255,255,.06); border-radius:var(--radius-sm); padding:var(--sp-3); transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease}
     .card:hover{transform:translateY(-4px); box-shadow:var(--shadow); border-color:rgba(110,200,255,.35)}
 
+    /* ====== Sincronização (animação) ====== */
+    .sync-canvas{position:relative; min-height:320px}
+    .device{position:absolute; width:min(38%, 260px)}
+    .device.laptop{left:0; bottom:0}
+    .device.tablet{right:5%; bottom:14%}
+    .device.phone{right:20%; top:0}
+    .file-dot{position:absolute; width:24px; height:24px; border-radius:50%; background:var(--warn); box-shadow:0 0 0 6px rgba(255,204,102,.15)}
+    .file-dot.animate{animation: travel 6s linear infinite}
+    @keyframes travel{0%{transform: translate(15%, 75%)}25%{transform: translate(70%, 55%)}50%{transform: translate(70%, 5%)}75%{transform: translate(12%, 20%)}100%{transform: translate(15%, 75%)}}
+
     /* ====== Comparativo (VERSUS) ====== */
     .versus{position:relative; display:grid; gap:var(--sp-3); align-items:start}
     @media(min-width:880px){ .versus{grid-template-columns:1fr 120px 1fr} }
     .side{background:var(--panel); border:1px solid rgba(255,255,255,.08); border-radius:16px; padding:var(--sp-3)}
-    .side h3{display:flex; align-items:center; gap:10px; margin-top:0}
-    .side .good li{list-style:"✔ "; margin-left:12px}
-    .side .bad  li{list-style:"✖ "; margin-left:12px}
     .center-col{display:grid; place-items:center}
     .vs-badge{width:90px; height:90px; border-radius:50%; display:grid; place-items:center; font-weight:900; letter-spacing:1px; background:radial-gradient(circle at 35% 35%, #2ea0ff, #1b2a48); box-shadow:0 10px 30px rgba(46,160,255,.35); border:1px solid rgba(255,255,255,.15)}
     .pair{display:grid; gap:12px}
     @media(min-width:880px){ .pair{grid-template-columns:1fr 1fr} }
     .pair .tile{background:#0e1730; border:1px solid rgba(255,255,255,.08); border-radius:12px; padding:12px}
-    .pair .title{font-weight:700; opacity:.9}
 
     /* ====== SYNC RUNNER ====== */
     .runner-wrap{display:grid; gap:var(--sp-3)}
     .hud{display:flex; flex-wrap:wrap; gap:10px; align-items:center}
     .badge{background:#0e1730; border:1px solid rgba(255,255,255,.06); padding:8px 12px; border-radius:10px}
-    .runner{position:relative; height:360px; border-radius:16px; overflow:hidden; border:1px solid rgba(255,255,255,.06); background:radial-gradient(400px 180px at 20% 50%, rgba(46,160,255,.08), transparent), radial-gradient(400px 180px at 80% 50%, rgba(103,193,255,.08), transparent), #0e1730; box-shadow: var(--shadow);}
+    .runner{position:relative; height:360px; border-radius:16px; overflow:hidden; border:1px solid rgba(255,255,255,.06); background:radial-gradient(400px 180px at 20% 50%, rgba(46,160,255,.08), transparent), radial-gradient(400px 180px at 80% 50%, rgba(103,193,255,.08), transparent), #0e1730; box-shadow: var(--shadow); touch-action:none}
     .lane{position:absolute; left:60px; right:60px; height:6px; background:linear-gradient(90deg, rgba(255,255,255,.18) 0 50%, rgba(255,255,255,.06) 50% 100%); background-size:36px 6px}
     .lane.l1{top:90px} .lane.l2{top:180px} .lane.l3{top:270px}
     .device-mini{position:absolute; width:48px; opacity:.9}
@@ -79,9 +85,17 @@
     .over{position:absolute; inset:0; display:none; place-items:center; background:rgba(6,12,24,.65); text-align:center; padding:20px}
     .over.show{display:grid}
 
+    /* ====== Controles Mobile ====== */
+    .mobile-keys{position:absolute; right:10px; bottom:10px; display:flex; gap:8px; z-index:5}
+    .key{width:54px; height:54px; border-radius:50%; border:1px solid rgba(255,255,255,.2); background:rgba(255,255,255,.06); display:grid; place-items:center; font-weight:700}
+    .key:active{transform:scale(.97)}
+    @media(min-width:900px){ .mobile-keys{display:none} }
+
+    /* ====== Footer ====== */
     footer{padding: var(--sp-5) 0; border-top:1px solid rgba(255,255,255,.06); background: rgba(6,12,24,.7)}
     .links{display:flex; gap:14px; flex-wrap:wrap; justify-content:center}
     .muted{color:var(--muted)}
+    .center{text-align:center}
   </style>
 </head>
 <body>
@@ -198,98 +212,88 @@
         <div class="side">
           <h3>☁️ Nuvem</h3>
           <div class="pair">
-            <div class="tile"><div class="title">Acessibilidade</div><div class="muted">Acesso de qualquer lugar e dispositivo.</div></div>
-            <div class="tile"><div class="title">Controle total</div><div class="muted">Gestão direta do hardware e dados.</div></div>
+            <div class="tile"><strong>Acessibilidade</strong><div class="muted">Acesso de qualquer lugar e dispositivo.</div></div>
+            <div class="tile"><strong>Controle total</strong><div class="muted">Gestão direta do hardware e dados.</div></div>
           </div>
           <div class="pair">
-            <div class="tile"><div class="title">Escalabilidade</div><div class="muted">Cresce por demanda, sem compras de hardware.</div></div>
-            <div class="tile"><div class="title">Escalabilidade difícil</div><div class="muted">Limites físicos e custos de expansão.</div></div>
+            <div class="tile"><strong>Escalabilidade</strong><div class="muted">Cresce por demanda, sem compras de hardware.</div></div>
+            <div class="tile"><strong>Escalabilidade difícil</strong><div class="muted">Limites físicos e custos de expansão.</div></div>
           </div>
           <div class="pair">
-            <div class="tile"><div class="title">Backup automático</div><div class="muted">Rotinas de snapshot e redundância.</div></div>
-            <div class="tile"><div class="title">Risco de perda física</div><div class="muted">Falha/roubo/incêndio impactam o acervo.</div></div>
+            <div class="tile"><strong>Backup automático</strong><div class="muted">Rotinas de snapshot e redundância.</div></div>
+            <div class="tile"><strong>Risco de perda física</strong><div class="muted">Falha/roubo/incêndio impactam o acervo.</div></div>
           </div>
-          <ul class="good">
-            <li>Colaboração em tempo real</li>
-            <li>Alta disponibilidade (SLA)</li>
-          </ul>
-          <ul class="bad">
-            <li>Depende da internet</li>
-            <li>Custo recorrente (assinatura)</li>
-            <li>Questões de privacidade/compliance</li>
+          <ul>
+            <li>Colaboração em tempo real • Alta disponibilidade (SLA)</li>
+            <li class="muted">Desafios: internet, custo recorrente, privacidade/compliance</li>
           </ul>
         </div>
-
-        <div class="center-col" aria-hidden="true">
-          <div class="vs-badge">VS</div>
-        </div>
-
+        <div class="center-col" aria-hidden="true"><div class="vs-badge">VS</div></div>
         <div class="side">
           <h3>💾 Local</h3>
           <div class="pair">
-            <div class="tile"><div class="title">Acessibilidade limitada</div><div class="muted">Acesso local ou via VPN.</div></div>
-            <div class="tile"><div class="title">Independente da internet</div><div class="muted">Operação offline garantida.</div></div>
+            <div class="tile"><strong>Acessibilidade limitada</strong><div class="muted">Acesso local ou via VPN.</div></div>
+            <div class="tile"><strong>Independente da internet</strong><div class="muted">Operação offline garantida.</div></div>
           </div>
           <div class="pair">
-            <div class="tile"><div class="title">Custo inicial alto</div><div class="muted">Compra de servidores e manutenção.</div></div>
-            <div class="tile"><div class="title">Sem mensalidade</div><div class="muted">Investimento único de hardware.</div></div>
+            <div class="tile"><strong>Custo inicial alto</strong><div class="muted">Compra de servidores e manutenção.</div></div>
+            <div class="tile"><strong>Sem mensalidade</strong><div class="muted">Investimento único de hardware.</div></div>
           </div>
           <div class="pair">
-            <div class="tile"><div class="title">Backup manual</div><div class="muted">Depende de rotinas e disciplina.</div></div>
-            <div class="tile"><div class="title">Privacidade interna</div><div class="muted">Dados sob políticas da própria empresa.</div></div>
+            <div class="tile"><strong>Backup manual</strong><div class="muted">Depende de rotinas e disciplina.</div></div>
+            <div class="tile"><strong>Privacidade interna</strong><div class="muted">Dados sob políticas da própria empresa.</div></div>
           </div>
-          <ul class="good">
-            <li>Controle de dados e auditoria local</li>
-            <li>Baixa latência na rede interna</li>
-          </ul>
-          <ul class="bad">
-            <li>Escalabilidade limitada</li>
-            <li>Responsabilidade total por segurança e backup</li>
+          <ul>
+            <li>Controle de dados e auditoria local • Baixa latência interna</li>
+            <li class="muted">Desafios: escalabilidade, segurança e backup por conta própria</li>
           </ul>
         </div>
       </div>
-      <p class="muted" style="margin-top:8px">Use o modelo <strong>híbrido</strong> quando precisar de colaboração e elasticidade da nuvem, mantendo dados sensíveis em infraestrutura local.</p>
+      <p class="muted" style="margin-top:8px">Modelo <strong>híbrido</strong>: colaboração e elasticidade da nuvem + dados sensíveis em infraestrutura local.</p>
     </section>
 
-    <!-- GAME: SYNC RUNNER -->
+    <!-- GAME: SYNC RUNNER (PC + CELULAR) -->
     <section id="game" class="container">
-      <h2>Sync Runner – Corra pela linha de sincronização</h2>
+      <h2>Sync Runner – PC e Celular</h2>
       <div class="panel runner-wrap">
         <div class="hud">
           <span class="badge" id="score">Pontuação: 0</span>
           <span class="badge" id="lives">Vidas: 3</span>
           <span class="badge" id="speed">Velocidade: 1x</span>
+          <span class="badge" id="best">Recorde: 0</span>
           <button class="cta" id="restart">Reiniciar</button>
         </div>
-        <div class="runner" id="runner" role="application" aria-label="Jogo Sync Runner. Use setas ↑ e ↓ para trocar de linha, espaço para pular.">
+        <div class="runner" id="runner" role="application" aria-label="Jogo Sync Runner. Setas ↑/↓ ou botões, toque para pular.">
+          <!-- Lanes -->
           <div class="lane l1"></div>
           <div class="lane l2"></div>
           <div class="lane l3"></div>
-
+          <!-- Devices origem/destino (decorativos) -->
           <svg class="device-mini dev-left dev-top" viewBox="0 0 64 64" aria-hidden="true"><rect x="8" y="20" width="48" height="28" rx="6" fill="#20345b"/></svg>
           <svg class="device-mini dev-left dev-mid" viewBox="0 0 64 64" aria-hidden="true"><rect x="6" y="8" width="52" height="48" rx="8" fill="#20345b"/></svg>
           <svg class="device-mini dev-left dev-bot" viewBox="0 0 64 64" aria-hidden="true"><rect x="18" y="6" width="28" height="52" rx="8" fill="#20345b"/></svg>
-
           <svg class="device-mini dev-right dev-top" viewBox="0 0 64 64" aria-hidden="true"><rect x="8" y="20" width="48" height="28" rx="6" fill="#20345b"/></svg>
           <svg class="device-mini dev-right dev-mid" viewBox="0 0 64 64" aria-hidden="true"><rect x="6" y="8" width="52" height="48" rx="8" fill="#20345b"/></svg>
           <svg class="device-mini dev-right dev-bot" viewBox="0 0 64 64" aria-hidden="true"><rect x="18" y="6" width="28" height="52" rx="8" fill="#20345b"/></svg>
-
+          <!-- Player e overlay -->
           <div class="player" id="player" style="left:90px; top:163px" aria-label="Arquivo corredor" title="Arquivo"></div>
-          <div class="over" id="over">
-            <div>
-              <h3>Conexão perdida!</h3>
-              <p class="muted">Clique em Reiniciar para jogar de novo. Colete <strong>bônus</strong> (backup/criptografia/redundância) e evite <strong>obstáculos</strong> (latência/desconexão/falha).</p>
-            </div>
+          <div class="over" id="over"><div><h3>Conexão perdida!</h3><p class="muted">Toque em Reiniciar para jogar de novo. Use as setas ou botões (↑/↓) e toque para pular.</p></div></div>
+          <!-- Controles Mobile -->
+          <div class="mobile-keys" aria-hidden="false">
+            <button class="key" id="keyUp" aria-label="Subir">↑</button>
+            <button class="key" id="keyDown" aria-label="Descer">↓</button>
+            <button class="key" id="keyJump" aria-label="Pular">⟲</button>
           </div>
         </div>
       </div>
-      <p class="muted">Controles: <strong>↑/↓</strong> troca de linha • <strong>Barra de Espaço</strong> pula.</p>
+      <p class="muted">Controles: <strong>PC</strong> – ↑/↓ e Espaço • <strong>Celular</strong> – botões ↑/↓ e toque (tap) para pular, ou deslize para cima/baixo para trocar de trilho.</p>
     </section>
   </main>
 
   <footer class="container" aria-label="Rodapé">
     <div class="links"><a href="#inicio">Sobre</a> · <a href="#comparativo">Termos</a> · <a href="#game">Contato</a></div>
-    <p class="muted" style="margin-top:4px">© 2025 – Projeto educacional fictício • Armazene seu futuro na nuvem!</p>
+    <p class="center" style="margin-top:10px">Armazene seu futuro na nuvem!</p>
+    <p class="center muted" style="margin-top:4px">© 2025 – Projeto educacional fictício</p>
   </footer>
 
   <script>
@@ -320,20 +324,45 @@
     syncObs.observe(syncSec);
   }
 
-  // ===== GAME: SYNC RUNNER =====
+  // ===== GAME: SYNC RUNNER (PC + MOBILE) =====
   const wrap = document.getElementById('runner');
   const player = document.getElementById('player');
   const over = document.getElementById('over');
   const scoreEl = document.getElementById('score');
   const livesEl = document.getElementById('lives');
   const speedEl = document.getElementById('speed');
+  const bestEl  = document.getElementById('best');
   const restartBtn = document.getElementById('restart');
+  const keyUp = document.getElementById('keyUp');
+  const keyDown = document.getElementById('keyDown');
+  const keyJump = document.getElementById('keyJump');
 
-  const lanesY = [73+17, 163, 253];
-  let lane = 1; let vy = 0; let jumping=false;
-  let objects=[]; let score=0; let lives=3; let speed=1; let running=true; let lastSpawn=0;
+  const lanesY = [90-17, 180-17, 270-17];
+  let lane = 1, vy = 0, jumping=false;
+  let objects=[], score=0, lives=3, speed=1, running=true, lastSpawn=0;
 
-  function setHUD(){ scoreEl.textContent = 'Pontuação: '+score; livesEl.textContent = 'Vidas: '+lives; speedEl.textContent = 'Velocidade: '+speed+'x'; }
+  // ===== Vibração & Recorde =====
+  const canVibrate = typeof navigator.vibrate === 'function';
+  function vibrate(ms){ if(canVibrate) navigator.vibrate(ms); }
+  let best = Number(localStorage.getItem('syncRunnerBest') || 0);
+  function updateBest(){ if(score>best){ best=score; localStorage.setItem('syncRunnerBest', String(best)); confetti(); } }
+  function setHUD(){ scoreEl.textContent = 'Pontuação: '+score; livesEl.textContent = 'Vidas: '+lives; speedEl.textContent = 'Velocidade: '+speed+'x'; bestEl.textContent = 'Recorde: '+best; }
+
+  // Efeito simples de confete quando bate recorde
+  function confetti(){
+    const n = 14; const box = document.createDocumentFragment();
+    for(let i=0;i<n;i++){
+      const s = document.createElement('span');
+      s.style.position='absolute'; s.style.left=(100+Math.random()*80)+'px'; s.style.top=(parseFloat(player.style.top)-10)+'px';
+      s.style.width = s.style.height = '6px'; s.style.borderRadius='2px'; s.style.background='hsl('+Math.floor(Math.random()*360)+',80%,60%)';
+      s.style.pointerEvents='none'; s.style.opacity='1'; s.style.transition='transform 800ms ease, opacity 900ms ease';
+      wrap.appendChild(s);
+      const dx = 80*(Math.random()*2-1); const dy = - (50 + Math.random()*80);
+      requestAnimationFrame(()=>{ s.style.transform = `translate(${dx}px, ${dy}px)`; s.style.opacity='0'; });
+      setTimeout(()=> s.remove(), 950);
+    }
+  }
+
   function obstacleIcon(){ return '<svg viewBox="0 0 24 24" width="20" height="20"><path fill="#ff7a7a" d="M12 2 2 22h20L12 2zm0 6 6 12H6l6-12z"/></svg>'; }
   function bonusIcon(){
     const picks = [
@@ -343,28 +372,65 @@
     ];
     return picks[Math.floor(Math.random()*picks.length)];
   }
+
   function spawn(){
-    if(!wrap) return; const isObstacle = Math.random()<0.6; const l = Math.floor(Math.random()*3);
-    const el = document.createElement('div'); el.className = isObstacle? 'obst' : 'bonus'; el.innerHTML = isObstacle? obstacleIcon() : bonusIcon();
-    el.style.right='-40px'; el.style.top = (lanesY[l]-17)+'px'; el.style.width='34px'; el.style.height='34px'; el.style.display='grid'; el.style.placeItems='center';
-    wrap.appendChild(el); objects.push({el, type:isObstacle?'obst':'bonus', x: wrap.clientWidth+40, y: lanesY[l]-17, w:34, h:34, spd: 3+speed});
+    if(!wrap) return; const isObstacle=Math.random()<0.6; const l=Math.floor(Math.random()*3);
+    const el=document.createElement('div'); el.className=isObstacle?'obst':'bonus'; el.innerHTML=isObstacle?obstacleIcon():bonusIcon();
+    el.style.right='-40px'; el.style.top=(lanesY[l])+'px'; el.style.width='34px'; el.style.height='34px'; el.style.display='grid'; el.style.placeItems='center';
+    wrap.appendChild(el); objects.push({el,type:isObstacle?'obst':'bonus',x:wrap.clientWidth+40,y:lanesY[l],w:34,h:34,spd:3+speed});
   }
+
   function reset(){
     objects.forEach(o=>o.el.remove()); objects=[]; score=0; lives=3; speed=1; lane=1; vy=0; jumping=false; running=true; lastSpawn=0; over.classList.remove('show');
-    player.style.top = (lanesY[lane]-17)+'px'; setHUD(); requestAnimationFrame(loop);
+    best = Number(localStorage.getItem('syncRunnerBest') || best || 0);
+    player.style.top=lanesY[lane]+'px'; setHUD(); requestAnimationFrame(loop);
   }
-  function rectsIntersect(a,b){ return !(a.x+a.w < b.x || a.x > b.x+b.w || a.y+a.h < b.y || a.y > b.y+b.h); }
+
+  function rectsIntersect(a,b){return !(a.x+a.w<b.x||a.x>b.x+b.w||a.y+a.h<b.y||a.y>b.y+b.h);} 
+
   function loop(ts){
     if(!running) return;
-    if(ts - lastSpawn > Math.max(700 - speed*80, 250)){ spawn(); lastSpawn = ts; }
-    for(let i=objects.length-1;i>=0;i--){ const o=objects[i]; o.x -= o.spd; o.el.style.transform = `translateX(${- (wrap.clientWidth - o.x)}px)`; if(o.x < -60){ o.el.remove(); objects.splice(i,1); } }
-    if(jumping){ vy += 0.9; let top = parseFloat(player.style.top); top += vy; const base = lanesY[lane]-17; if(top>=base){ top=base; jumping=false; vy=0; } player.style.top = top+'px'; }
-    const pRect = {x:90, y:parseFloat(player.style.top), w:34, h:34};
-    for(let i=objects.length-1;i>=0;i--){ const o=objects[i]; const oRect = {x:o.x-34, y:o.y, w:o.w, h:o.h}; if(rectsIntersect(pRect, oRect)){ if(o.type==='obst'){ lives--; if(lives<=0){ running=false; over.classList.add('show'); break;} } else { score += 10; if(score % 50 === 0) speed++; } setHUD(); o.el.remove(); objects.splice(i,1); } }
+    if(ts-lastSpawn>Math.max(700-speed*80,250)){spawn(); lastSpawn=ts;}
+    for(let i=objects.length-1;i>=0;i--){const o=objects[i]; o.x-=o.spd; o.el.style.transform=`translateX(${- (wrap.clientWidth - o.x)}px)`; if(o.x<-60){o.el.remove(); objects.splice(i,1);} }
+    if(jumping){ vy+=0.9; let top=parseFloat(player.style.top); top+=vy; const base=lanesY[lane]; if(top>=base){top=base;jumping=false;vy=0;} player.style.top=top+'px'; }
+
+    const pRect={x:90,y:parseFloat(player.style.top),w:34,h:34};
+    for(let i=objects.length-1;i>=0;i--){
+      const o=objects[i]; const oRect={x:o.x-34,y:o.y,w:o.w,h:o.h};
+      if(rectsIntersect(pRect,oRect)){
+        if(o.type==='obst'){
+          lives--; vibrate(200);
+          if(lives<=0){ running=false; over.classList.add('show'); updateBest(); }
+        } else {
+          score+=10; vibrate(50); if(score%50===0) speed++; updateBest();
+        }
+        setHUD(); o.el.remove(); objects.splice(i,1);
+      }
+    }
     if(running) requestAnimationFrame(loop);
   }
-  addEventListener('keydown', (e)=>{ if(!running) return; if(e.key==='ArrowUp'){ lane = Math.max(0, lane-1); player.style.top = (lanesY[lane]-17)+'px'; } else if(e.key==='ArrowDown'){ lane = Math.min(2, lane+1); player.style.top = (lanesY[lane]-17)+'px'; } else if(e.key===' '){ if(!jumping){ jumping=true; vy = -10; } e.preventDefault(); } });
-  document.getElementById('restart').addEventListener('click', reset);
+
+  // Teclado (desktop)
+  addEventListener('keydown',(e)=>{ if(!running) return; if(e.key==='ArrowUp'){ lane=Math.max(0,lane-1); player.style.top=lanesY[lane]+'px'; } else if(e.key==='ArrowDown'){ lane=Math.min(2,lane+1); player.style.top=lanesY[lane]+'px'; } else if(e.key===' '){ if(!jumping){ jumping=true; vy=-10;} e.preventDefault(); } });
+
+  // Botões (mobile)
+  function moveUp(){ lane=Math.max(0,lane-1); player.style.top=lanesY[lane]+'px'; }
+  function moveDown(){ lane=Math.min(2,lane+1); player.style.top=lanesY[lane]+'px'; }
+  function jump(){ if(!jumping){ jumping=true; vy=-10; } }
+  if(keyUp&&keyDown&&keyJump){ keyUp.addEventListener('click', moveUp); keyDown.addEventListener('click', moveDown); keyJump.addEventListener('click', jump); }
+
+  // Gestos (tap = pulo, swipe up/down = trocar trilho)
+  let touchStartY=null, touchStartX=null, touchTime=0;
+  wrap.addEventListener('touchstart',(e)=>{ const t=e.changedTouches[0]; touchStartY=t.clientY; touchStartX=t.clientX; touchTime=Date.now(); },{passive:true});
+  wrap.addEventListener('touchend',(e)=>{ const t=e.changedTouches[0]; const dy=t.clientY - touchStartY; const dx=t.clientX - touchStartX; const dt=Date.now()-touchTime; const absY=Math.abs(dy), absX=Math.abs(dx);
+    if(absY<15 && absX<15 && dt<250){ jump(); return; }
+    if(absY>30 && absY>absX){ if(dy<0) moveUp(); else moveDown(); }
+  },{passive:true});
+
+  // Start game
+  restartBtn.addEventListener('click', reset);
+  // Inicializa recorde no HUD
+  bestEl.textContent = 'Recorde: '+best;
   reset();
   </script>
 </body>
